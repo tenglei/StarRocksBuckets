@@ -37,7 +37,7 @@ func ScanSchemaSetBuckets(stable string, sbucket int64) {
 	}
 
 	var CreateSQL, ob string
-	db, err := conn.StarRocks(util.P.App)
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		util.Loggrs.Error(err.Error())
 		return
@@ -170,7 +170,7 @@ func ScanSchemaSetBuckets(stable string, sbucket int64) {
 		}
 		t.Metas <- metaload.MetaInfo{
 			Ts:          time.Now().Format("2006-01-02"),
-			App:         util.P.App,
+			App:         util.SrConfig.Host,
 			Database:    dbname,
 			Table:       tbname,
 			StmtBefore:  stmt_before,

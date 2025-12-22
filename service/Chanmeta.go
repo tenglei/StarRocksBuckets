@@ -22,17 +22,8 @@ func (j *Job) Chanmetadata() {
 		case meta, _ := <-t.MetaData:
 			c := color.New()
 			inProgress = 1
-			var avg util.SrAvgs
-			for _, m := range util.MetaLink {
-				if m["app"].(string) == util.P.App {
-					avg = util.SrAvgs{
-						Host: m["feip"].(string),
-						Port: int(m["feport"].(int32)),
-						User: m["user"].(string),
-						Pass: m["password"].(string),
-					}
-				}
-			}
+			// 直接使用全局配置
+			avg := util.SrConfig
 			if len(meta) == 0 {
 				return
 			}

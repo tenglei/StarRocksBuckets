@@ -29,7 +29,7 @@ func init() {
 	flag.StringVar(&P.BackendId, "id", "", c.Add(color.FgHiWhite).Sprint("BACKEND ID"))
 	flag.StringVar(&P.SplitKey, "splitkey", "", c.Add(color.FgHiCyan).Sprint("BUCKET KEY"))
 	flag.StringVar(&P.SortKey, "sortkey", "", c.Add(color.FgHiCyan).Sprint("SORT KEY"))
-	flag.StringVar(&P.App, "s", "", "<APP>")
+	// 移除了 -s 参数，不再需要指定APP名称
 	flag.BoolVar(&P.Help, "h", false, "show help information")
 	flag.BoolVar(&P.List, "l", false, c.Add(color.FgHiWhite).Sprint("SHOW SORT KEY"))
 	flag.BoolVar(&P.Auto, "a", false, "AUTO OVERWRITE")
@@ -46,7 +46,7 @@ func init() {
 		flag.Usage()
 		os.Exit(1)
 	}
-	if P.Help || len(P.App) == 0 || len(P.Table) == 0 {
+	if P.Help || len(P.Table) == 0 {
 		flag.Usage()
 		os.Exit(-1)
 	}

@@ -6,6 +6,7 @@ require (
 	github.com/fatih/color v1.18.0
 	github.com/rs/xid v1.6.0
 	github.com/sirupsen/logrus v1.9.3
+	golang.org/x/term v0.28.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
 )

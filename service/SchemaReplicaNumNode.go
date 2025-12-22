@@ -12,7 +12,7 @@ import (
 
 // distributionNode 每个节点的副本分布情况
 func distributionNode(replica []map[string]interface{},backendId string)  {
-	db, err := conn.StarRocks(util.P.App)
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		fmt.Println(err.Error())
 		return

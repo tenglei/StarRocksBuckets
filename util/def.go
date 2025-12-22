@@ -6,14 +6,14 @@ import (
 )
 
 var (
-	P        Parms
-	Loggrs   *logrus.Logger
-	MetaLink []map[string]interface{}
+	P      Parms
+	Loggrs *logrus.Logger
+	// StarRocks连接配置（通过交互式输入获取）
+	SrConfig SrAvgs
 )
 
 type Parms struct {
 	Help           bool
-	App            string
 	Action         string
 	Buckets        int64
 	List           bool
@@ -27,6 +27,7 @@ type Parms struct {
 	TabletSize     int64
 	PartitionSet   bool
 	PartitionName  string
+	// 移除了App字段，不再从命令行参数获取
 }
 
 type SrAvgs struct {

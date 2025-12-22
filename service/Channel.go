@@ -41,7 +41,7 @@ type Job struct {
 }
 
 func (j *Job) SyncPartition() {
-	db, _ := conn.StarRocks(util.P.App)
+	db, _ := conn.StarRocks(util.SrConfig)
 	// 创建一个WaitGroup来等待所有goroutine完成
 	var wg sync.WaitGroup
 	// 定义最大并发处理的channel数量
@@ -102,7 +102,7 @@ func (j *Job) SyncPartition() {
 					if r.Error != nil {
 						util.Loggrs.Error(c.Add(color.FgHiWhite).Sprint("TOP:RUN > "), taskname, " ", r.Error.Error())
 						if strings.Contains(r.Error.Error(), "connection refused") {
-							db, _ = conn.StarRocks(util.P.App)
+							db, _ = conn.StarRocks(util.SrConfig)
 						}
 						continue
 					}
@@ -119,7 +119,7 @@ func (j *Job) SyncPartition() {
 					if r.Error != nil {
 						util.Loggrs.Error(c.Add(color.FgHiWhite).Sprint("TOP:RUN > "), taskname, " ", r.Error.Error())
 						if strings.Contains(r.Error.Error(), "connection refused") {
-							db, _ = conn.StarRocks(util.P.App)
+							db, _ = conn.StarRocks(util.SrConfig)
 						}
 						break
 					}
@@ -172,7 +172,7 @@ func (j *Job) SyncPartition() {
 				if r.Error != nil {
 					util.Loggrs.Error(c.Add(color.FgHiWhite).Sprint("TOP:RUN > "), taskname, " ", r.Error.Error())
 					if strings.Contains(r.Error.Error(), "connection refused") {
-						db, _ = conn.StarRocks(util.P.App)
+						db, _ = conn.StarRocks(util.SrConfig)
 					}
 					continue
 				}
@@ -189,7 +189,7 @@ func (j *Job) SyncPartition() {
 				if r.Error != nil {
 					util.Loggrs.Error(c.Add(color.FgHiWhite).Sprint("TOP:RUN > "), taskname, " ", r.Error.Error())
 					if strings.Contains(r.Error.Error(), "connection refused") {
-						db, _ = conn.StarRocks(util.P.App)
+						db, _ = conn.StarRocks(util.SrConfig)
 					}
 					break
 				}

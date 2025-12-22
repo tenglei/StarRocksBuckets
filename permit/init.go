@@ -24,7 +24,7 @@ func init() {
 		return
 	}
 
-	srother, err = conn.StarRocks(util.P.App)
+	srother, err = conn.StarRocks(util.SrConfig)
 	if err != nil {
 		util.Loggrs.Error(err.Error())
 		return

@@ -23,7 +23,7 @@ func Permitgrants(table string) {
 	}
 	util.Loggrs.Info("检索权限")
 	var c util.Catch
-	r := srqa.Raw(fmt.Sprintf("select distinct app,user,grants from audit.ddlcatch where app='%s' and grants like '%%%s%%'", util.P.App, table)).Scan(&c)
+	r := srqa.Raw(fmt.Sprintf("select distinct app,user,grants from audit.ddlcatch where app='%s' and grants like '%%%s%%'", util.SrConfig.Host, table)).Scan(&c)
 	if r.Error != nil {
 		util.Loggrs.Error(r.Error.Error())
 		return

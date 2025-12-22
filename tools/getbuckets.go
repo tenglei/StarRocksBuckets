@@ -21,7 +21,7 @@ type BucketInfo struct {
 }
 
 func GetBuckets(stable string) *BucketInfo{
-	db, err := conn.StarRocks(util.P.App)
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		util.Loggrs.Error(err.Error())
 		return &BucketInfo{}

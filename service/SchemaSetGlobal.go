@@ -22,7 +22,7 @@ func SetParGlobal(table, taskname string, bucket int64) {
 	stime := time.Now()
 
 	util.Loggrs.Info(c.Add(color.FgHiWhite).Sprint("TOP:JOB > "), taskname, " ", "自动调整内表所有分桶数")
-	tgr, err := conn.StarRocks(util.P.App)
+	tgr, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		util.Loggrs.Error(c.Add(color.FgHiWhite).Sprint("TOP:JOB > "), taskname, " ", err.Error())
 		return
@@ -44,7 +44,7 @@ func SetParGlobal(table, taskname string, bucket int64) {
 		util.Loggrs.Info(c.Add(color.FgHiWhite).Sprint("TOP:JOB > "), taskname, " ", msg)
 
 		fix = util.Fix{
-			App:     util.P.App,
+			App:     util.SrConfig.Host,
 			Edtime:  int64(time.Now().Sub(stime).Seconds()),
 			Count:   lc,
 			Before:  int64(before),

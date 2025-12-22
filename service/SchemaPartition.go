@@ -14,7 +14,7 @@ import (
 
 // ScanSchemaPartition 空分区与非空分区组装
 func ScanSchemaPartition(stable string) (string, error) {
-	db, err := conn.StarRocks(util.P.App)
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		return "", err
 	}

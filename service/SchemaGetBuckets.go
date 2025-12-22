@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-func getbuckets(app,table string) bucketStr {
-	db, err := conn.StarRocks(app)
+func getbuckets(table string) bucketStr {
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		util.Loggrs.Error(err.Error())
 		return bucketStr{}
@@ -94,7 +94,7 @@ func getbuckets(app,table string) bucketStr {
 	msgs := fmt.Sprintf("说明：[%s]，表中最大的分区容量为:%s，目前分桶是:%s，按照1GB=1BUCKETS原则，允许分桶范围:（%d~%d）BUCKETS，最佳分桶是:%d", mms, fmt.Sprintf("%0.4fGB", maxDataSize/1024/1024/1024), Buckets, conservative, conservative+20, best)
 
 	b := bucketStr{
-		App:          app,
+		App:          util.SrConfig.Host,
 		Best:         best,
 		Buckets:      Buckets,
 		Client:       "",

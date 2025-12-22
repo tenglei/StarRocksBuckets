@@ -24,7 +24,7 @@ func ScanSchemaGetPartitionRange(stable string) ([]map[string]string, error) {
 		}
 	}()
 
-	db, err := conn.StarRocks(util.P.App)
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		return nil, err
 	}

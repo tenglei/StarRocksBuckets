@@ -61,30 +61,30 @@ func Run() {
 	//////////////////////////////////
 	//////////////////////////////////
 
-	if len(util.P.App) != 0 && len(util.P.Table) != 0 && util.P.ClearPartition && !util.P.Auto && util.P.Buckets == 0 {
+	if len(util.P.Table) != 0 && util.P.ClearPartition && !util.P.Auto && util.P.Buckets == 0 {
 		AutoSetPartitions()
 		return
 	}
 
-	if len(util.P.App) != 0 && len(util.P.Table) != 0 && util.P.PartitionSet && util.P.Auto {
+	if len(util.P.Table) != 0 && util.P.PartitionSet && util.P.Auto {
 		SetAutoGlobal()
 		permit.Permitgrants(util.P.Table)
 		return
 	}
 
-	if len(util.P.App) != 0 && len(util.P.Table) != 0 && util.P.PartitionSet && util.P.Buckets != 0 && len(util.P.PartitionName) == 0 {
+	if len(util.P.Table) != 0 && util.P.PartitionSet && util.P.Buckets != 0 && len(util.P.PartitionName) == 0 {
 		SetParGlobal(util.P.Table, xid.New().String(), util.P.Buckets)
 		util.Loggrs.Info("TOP:JOB > done.")
 		return
 	}
 
-	if len(util.P.App) != 0 && len(util.P.Table) != 0 && util.P.PartitionSet {
+	if len(util.P.Table) != 0 && util.P.PartitionSet {
 		SetParBuckets()
 		util.Loggrs.Info("TOP:JOB > done.")
 		return
 	}
 
-	if len(util.P.App) != 0 && len(util.P.Table) != 0 {
+	if len(util.P.Table) != 0 {
 		if util.P.Auto || util.P.Buckets > 0 {
 			ScanSchemaAutoSetBuckets()
 			util.Loggrs.Info("done.")
@@ -94,8 +94,8 @@ func Run() {
 
 	schema := tools.Other()
 
-	if len(util.P.App) != 0 && len(util.P.Table) != 0 {
-		b := getbuckets(util.P.App, util.P.Table)
+	if len(util.P.Table) != 0 {
+		b := getbuckets(util.P.Table)
 		c := color.New()
 		fmt.Println("\nOptions:\nstarrocks buckets分桶体检1.0")
 		fmt.Println()

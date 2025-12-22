@@ -11,25 +11,10 @@ import (
 	"time"
 )
 
-func StarRocks(app string) (*gorm.DB, error) {
-	var avg util.SrAvgs
-	// connect
-	if len(util.MetaLink) == 0 {
-		return nil, errors.New("config db is null")
-	}
-	for _, m := range util.MetaLink {
-		if m["app"].(string) == app {
-			avg = util.SrAvgs{
-				Host: m["feip"].(string),
-				Port: int(m["feport"].(int32)),
-				User: m["user"].(string),
-				Pass: m["password"].(string),
-			}
-		}
-	}
-
-	if avg.Host == "" {
-		return nil, errors.New("avg is null")
+func StarRocks(cfg util.SrAvgs) (*gorm.DB, error) {
+	// 验证连接参数
+	if err := util.ValidateConnectionParams(cfg); err != nil {
+		return nil, fmt.Errorf("连接参数验证失败: %v", err)
 	}
 
 	newLogger := logger.New(nil,
@@ -38,10 +23,10 @@ func StarRocks(app string) (*gorm.DB, error) {
 		},
 	)
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/information_schema?parseTime=true&charset=utf8mb4&loc=Local",
-		avg.User,
-		avg.Pass,
-		avg.Host,
-		avg.Port,
+		cfg.User,
+		cfg.Pass,
+		cfg.Host,
+		cfg.Port,
 	)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
@@ -55,25 +40,14 @@ func StarRocks(app string) (*gorm.DB, error) {
 	return db, err
 }
 
-func StarRocksApp(app, host string) (*gorm.DB, error) {
-	var avg util.SrAvgs
-
+func StarRocksApp(cfg util.SrAvgs, host string) (*gorm.DB, error) {
 	if len(host) == 0 {
 		return nil, errors.New("登录信息有误，或为空。")
 	}
-	for _, m := range util.MetaLink {
-		if m["app"].(string) == app {
-			avg = util.SrAvgs{
-				Host: m["feip"].(string),
-				Port: int(m["feport"].(int32)),
-				User: m["user"].(string),
-				Pass: m["password"].(string),
-			}
-		}
-	}
-
-	if avg.Host == "" {
-		return nil, errors.New("avg is null")
+	
+	// 验证连接参数
+	if err := util.ValidateConnectionParams(cfg); err != nil {
+		return nil, fmt.Errorf("连接参数验证失败: %v", err)
 	}
 
 	newLogger := logger.New(nil,
@@ -81,7 +55,7 @@ func StarRocksApp(app, host string) (*gorm.DB, error) {
 			SlowThreshold: time.Second * 1000, // 控制慢SQL阈值
 		},
 	)
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/information_schema?charset=utf8mb4&parseTime=True&loc=Local", avg.User, avg.Pass, host, avg.Port)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/information_schema?charset=utf8mb4&parseTime=True&loc=Local", cfg.User, cfg.Pass, host, cfg.Port)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, // 使用单数表名

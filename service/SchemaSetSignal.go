@@ -34,7 +34,7 @@ func SetParBuckets() {
 	}
 
 	util.Loggrs.Info(c.Add(color.FgHiWhite).Sprint("TOP:JOB > ", "自动修改分区层级分桶数"))
-	tgr, err := conn.StarRocks(util.P.App)
+	tgr, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		util.Loggrs.Error(c.Add(color.FgHiWhite).Sprint("TOP:JOB > "), err.Error())
 		return
@@ -56,7 +56,7 @@ func SetParBuckets() {
 		util.Loggrs.Info(c.Add(color.FgHiWhite).Sprint("TOP:JOB > "), msg)
 
 		fix = util.Fix{
-			App:     util.P.App,
+			App:     util.SrConfig.Host,
 			Edtime:  int64(time.Now().Sub(stime).Seconds()),
 			Count:   lc,
 			Before:  int64(before),

@@ -43,7 +43,7 @@ type Schemas struct {
 }
 
 func Other() Schemas {
-	db, err := conn.StarRocks(util.P.App)
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		fmt.Println(err.Error())
 		return Schemas{}
@@ -170,7 +170,7 @@ func FindKeyRank(slice []map[string]int64, searchKey string) (int, bool) {
 
 // ScanCountDistinct 统计每个字段1000行内重复次数
 func ScanCountDistinct(column, table string) int64 {
-	db, err := conn.StarRocks(util.P.App)
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		fmt.Println(err.Error())
 		return 0

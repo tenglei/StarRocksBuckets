@@ -25,7 +25,7 @@ func ScanSchemaSortKey() {
 	fmt.Println()
 	fmt.Println("排序键：")
 
-	db, err := conn.StarRocks(util.P.App)
+	db, err := conn.StarRocks(util.SrConfig)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
