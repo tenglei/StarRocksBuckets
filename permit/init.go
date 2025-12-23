@@ -18,7 +18,8 @@ var srqa, srother *gorm.DB
 
 func init() {
 	var err error
-	srqa, err = conn.StarRocks("sr-qa")
+	// 使用全局配置连接StarRocks
+	srqa, err = conn.StarRocks(util.SrConfig)
 	if err != nil {
 		util.Loggrs.Error(err.Error())
 		return

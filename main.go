@@ -20,27 +20,28 @@ func main() {
 	// 显示启动横幅
 	printStartupBanner()
 	
-	// 解析命令行参数
-	util.Parm()
+	// ==========================================
+	// 步骤1: 交互式采集StarRocks连接参数
+	// ==========================================
+	c := color.New()
+	fmt.Println(c.Add(color.FgHiCyan).Sprint("\n📋 程序启动模式：交互式输入集群连接信息"))
+	fmt.Println(c.Add(color.FgHiWhite).Sprint("请按照提示输入StarRocks集群的连接参数..."))
+	fmt.Println()
 	
-	// 交互式采集StarRocks连接参数
 	cfg, err := util.CollectConnectionParams()
 	if err != nil {
-		c := color.New()
 		fmt.Println(c.Add(color.FgHiRed).Sprint("❌ 采集连接参数失败:"), err)
 		return
 	}
 	
 	// 验证连接参数
 	if err := util.ValidateConnectionParams(cfg); err != nil {
-		c := color.New()
 		fmt.Println(c.Add(color.FgHiRed).Sprint("❌ 参数验证失败:"), err)
 		return
 	}
 	
 	// 测试连接
-	c := color.New()
-	fmt.Println(c.Add(color.FgHiYellow).Sprint("🔌 正在尝试连接StarRocks..."))
+	fmt.Println(c.Add(color.FgHiYellow).Sprint("🔌 正在尝试连接StarRocks集群..."))
 	db, err := conn.StarRocks(cfg)
 	if err != nil {
 		fmt.Println(c.Add(color.FgHiRed).Sprint("❌ 连接StarRocks失败:"), err)
@@ -58,12 +59,20 @@ func main() {
 	}
 	
 	fmt.Println(c.Add(color.FgHiGreen).Sprint("✅ 连接成功！"))
+	fmt.Println(c.Add(color.FgHiGreen).Sprint("✅ 集群信息已保存，后续操作将使用此连接配置"))
 	fmt.Println()
 	
-	// 保存全局配置
+	// 保存全局配置供后续使用
 	util.SrConfig = cfg
 	
-	// 运行业务逻辑
+	// ==========================================
+	// 步骤2: 解析命令行参数（业务操作参数）
+	// ==========================================
+	util.Parm()
+	
+	// ==========================================
+	// 步骤3: 执行业务逻辑
+	// ==========================================
 	service.Run()
 }
 
