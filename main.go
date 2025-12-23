@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"setbuckets/conn"
+	"setbuckets/permit"
 	"setbuckets/service"
 	"setbuckets/util"
 	"strings"
@@ -24,8 +26,8 @@ func main() {
 	// 步骤1: 交互式采集StarRocks连接参数
 	// ==========================================
 	c := color.New()
-	fmt.Println(c.Add(color.FgHiCyan).Sprint("\n📋 程序启动模式：交互式输入集群连接信息"))
-	fmt.Println(c.Add(color.FgHiWhite).Sprint("请按照提示输入StarRocks集群的连接参数..."))
+	fmt.Println(c.Add(color.FgHiCyan).Sprint("\n📋 程序启动模式：交互式命令行界面"))
+	fmt.Println(c.Add(color.FgHiWhite).Sprint("首先请输入StarRocks集群的连接信息..."))
 	fmt.Println()
 	
 	cfg, err := util.CollectConnectionParams()
@@ -41,7 +43,7 @@ func main() {
 	}
 	
 	// 测试连接
-	fmt.Println(c.Add(color.FgHiYellow).Sprint("🔌 正在尝试连接StarRocks集群..."))
+	fmt.Println(c.Add(color.FgHiYellow).Sprint("🔌 正在测试连接StarRocks集群..."))
 	db, err := conn.StarRocks(cfg)
 	if err != nil {
 		fmt.Println(c.Add(color.FgHiRed).Sprint("❌ 连接StarRocks失败:"), err)
@@ -59,21 +61,94 @@ func main() {
 	}
 	
 	fmt.Println(c.Add(color.FgHiGreen).Sprint("✅ 连接成功！"))
-	fmt.Println(c.Add(color.FgHiGreen).Sprint("✅ 集群信息已保存，后续操作将使用此连接配置"))
-	fmt.Println()
+	fmt.Println(c.Add(color.FgHiGreen).Sprint("✅ 集群连接配置已保存，可以开始执行命令"))
 	
 	// 保存全局配置供后续使用
 	util.SrConfig = cfg
 	
-	// ==========================================
-	// 步骤2: 解析命令行参数（业务操作参数）
-	// ==========================================
-	util.Parm()
+	// 初始化日志
+	util.Logrus()
+	
+	// 初始化permit包的数据库连接
+	if err := permit.InitConnections(); err != nil {
+		fmt.Println(c.Add(color.FgHiYellow).Sprint("⚠️  警告: permit模块初始化失败:"), err)
+		fmt.Println(c.Add(color.FgHiYellow).Sprint("⚠️  部分功能可能不可用，但程序将继续运行"))
+	}
 	
 	// ==========================================
-	// 步骤3: 执行业务逻辑
+	// 步骤2: 进入交互式命令行循环
 	// ==========================================
-	service.Run()
+	startInteractiveCLI()
+}
+
+// startInteractiveCLI 启动交互式命令行界面
+func startInteractiveCLI() {
+	c := color.New()
+	reader := bufio.NewReader(os.Stdin)
+	
+	// 显示帮助信息
+	util.PrintCommandHelp()
+	
+	for {
+		// 重置参数
+		util.ResetParams()
+		
+		// 显示命令提示符
+		fmt.Print(c.Add(color.FgHiCyan).Sprint("\n> "))
+		
+		// 读取用户输入
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println(c.Add(color.FgHiRed).Sprint("❌ 读取输入失败:"), err)
+			continue
+		}
+		
+		// 去除首尾空白
+		input = strings.TrimSpace(input)
+		
+		// 处理空输入
+		if input == "" {
+			continue
+		}
+		
+		// 处理退出命令
+		if input == "exit" || input == "quit" || input == "q" {
+			fmt.Println(c.Add(color.FgHiYellow).Sprint("👋 感谢使用，再见！"))
+			os.Exit(0)
+		}
+		
+		// 处理帮助命令
+		if input == "help" || input == "h" || input == "?" {
+			util.PrintCommandHelp()
+			continue
+		}
+		
+		// 解析并执行命令
+		args := util.ParseCommandLine(input)
+		if len(args) == 0 {
+			continue
+		}
+		
+		// 解析参数
+		if !util.ParseArgs(args) {
+			continue
+		}
+		
+		// 验证参数
+		if !util.ValidateParams() {
+			continue
+		}
+		
+		// 执行业务逻辑
+		fmt.Println(c.Add(color.FgHiGreen).Sprint("\n⚙️  正在执行命令..."))
+		fmt.Println()
+		
+		// 执行service.Run()
+		service.Run()
+		
+		fmt.Println()
+		fmt.Println(c.Add(color.FgHiGreen).Sprint("✅ 命令执行完成"))
+	}
 }
 
 // printStartupBanner 显示启动横幅

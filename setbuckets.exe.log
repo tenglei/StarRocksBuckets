@@ -5,3 +5,649 @@
 [31mERROR  [0m[2025-12-23T09:47:17+08:00]  object.go:66                      Error 5501 (3F000): Getting analyzing error. Detail message: Unknown database 'test_db'. 
 [31mERROR  [0m[2025-12-23T09:47:17+08:00]  SchemaGetBuckets.go:34            Error 5501 (3F000): Getting analyzing error. Detail message: Unknown database 'test_db'. 
 [31mERROR  [0m[2025-12-23T14:51:40+08:00]  init.go:24                        连接参数验证失败: 主机地址不能为空                           
+[36mINFO   [0m[2025-12-23T15:29:28+08:00]  SchemaSetBuckets.go:58            原始SQL:
+[94mCREATE TABLE `store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 192 
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T15:29:28+08:00]  SchemaSetBuckets.go:193           原始BUCKETS:[ BUCKETS 192 ], length:13         
+[36mINFO   [0m[2025-12-23T15:29:28+08:00]  SchemaSetBuckets.go:200           [93mo:[ BUCKETS 192 ],n:[ BUCKETS 1][0m    
+[36mINFO   [0m[2025-12-23T15:29:28+08:00]  SchemaSetBuckets.go:214           新生SQL:
+[92muse tpcds;create table if not exists `buckets_1766474968908_store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 1
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T15:29:28+08:00]  SchemaSetBuckets.go:216           新生SQL执行中, 此过程会根据创建分区的多少, 耗费一定的时间...          
+[36mINFO   [0m[2025-12-23T15:29:28+08:00]  SchemaSetBuckets.go:233           建表完成: tpcds.buckets_1766474968908_store_sales 
+[36mINFO   [0m[2025-12-23T15:29:28+08:00]  SchemaSetBuckets.go:242           select count(*) as count from tpcds.store_sales 
+[36mINFO   [0m[2025-12-23T15:29:29+08:00]  SchemaSetBuckets.go:281           [92msubmit /*+set_var(query_timeout=14400,pipeline_dop=0,exec_mem_limit=214748364800)*/ task setbuckets_d5549m9abaogne3h7ikg_1766474969028747 as insert into tpcds.buckets_1766474968908_store_sales select * from tpcds.store_sales[0m 
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:323           [92;92minsert into done![0;0m              
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:326           __End__Data_Finished[buckets_1766474968908_store_sales] (28800991.00/28800991.00)##################################################100% 
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:327           数据写入成功                                       
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:340           开始交换表名                                       
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:342           use tpcds;alter table store_sales rename buckets_swap_bts_1766474984 
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:349           use tpcds;alter table buckets_1766474968908_store_sales rename store_sales 
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:355           数据交互完成, 分桶修改完成!                              
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:360           删除旧表                                         
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:362           drop table tpcds.buckets_swap_bts_1766474984 
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:368           删除成功!                                        
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:369           完成整改: tpcds.store_sales                      
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  SchemaSetBuckets.go:152           [tpcds.store_sales]耗时: 15.3538159s           
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  Permit.go:24                      检索权限                                         
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  ChanTicker.go:28                  [97mMET:JOI > [0m1                         
+[31mERROR  [0m[2025-12-23T15:29:44+08:00]  Permit.go:28                      Error 5501 (3F000): Getting analyzing error. Detail message: Unknown database 'audit'. 
+[36mINFO   [0m[2025-12-23T15:29:44+08:00]  main.go:90                        done.                                        
+[36mINFO   [0m[2025-12-23T15:42:07+08:00]  SchemaSetBuckets.go:58            原始SQL:
+[94mCREATE TABLE `store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 1 
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T15:42:07+08:00]  SchemaSetBuckets.go:193           原始BUCKETS:[ BUCKETS 1 ], length:11           
+[36mINFO   [0m[2025-12-23T15:42:07+08:00]  SchemaSetBuckets.go:200           [93mo:[ BUCKETS 1 ],n:[ BUCKETS 10][0m     
+[36mINFO   [0m[2025-12-23T15:42:07+08:00]  SchemaSetBuckets.go:214           新生SQL:
+[92muse tpcds;create table if not exists `buckets_1766475727523_store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 10
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T15:42:07+08:00]  SchemaSetBuckets.go:216           新生SQL执行中, 此过程会根据创建分区的多少, 耗费一定的时间...          
+[36mINFO   [0m[2025-12-23T15:42:07+08:00]  SchemaSetBuckets.go:233           建表完成: tpcds.buckets_1766475727523_store_sales 
+[36mINFO   [0m[2025-12-23T15:42:07+08:00]  SchemaSetBuckets.go:242           select count(*) as count from tpcds.store_sales 
+[36mINFO   [0m[2025-12-23T15:42:07+08:00]  SchemaSetBuckets.go:281           [92msubmit /*+set_var(query_timeout=14400,pipeline_dop=0,exec_mem_limit=214748364800)*/ task setbuckets_d554fjpabaoklg4rbmr0_1766475727597394 as insert into tpcds.buckets_1766475727523_store_sales select * from tpcds.store_sales[0m 
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:323           [92;92minsert into done![0;0m              
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:326           __End__Data_Finished[buckets_1766475727523_store_sales] (28800991.00/28800991.00)##################################################100% 
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:327           数据写入成功                                       
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:340           开始交换表名                                       
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:342           use tpcds;alter table store_sales rename buckets_swap_bts_1766475749 
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:349           use tpcds;alter table buckets_1766475727523_store_sales rename store_sales 
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:355           数据交互完成, 分桶修改完成!                              
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:360           删除旧表                                         
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:362           drop table tpcds.buckets_swap_bts_1766475749 
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:368           删除成功!                                        
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:369           完成整改: tpcds.store_sales                      
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  SchemaSetBuckets.go:152           [tpcds.store_sales]耗时: 22.2485185s           
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  Permit.go:33                      检索权限                                         
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  ChanTicker.go:28                  [97mMET:JOI > [0m1                         
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  Permit.go:40                      跳过权限检查: audit数据库不存在                          
+[36mINFO   [0m[2025-12-23T15:42:29+08:00]  main.go:90                        done.                                        
+[36mINFO   [0m[2025-12-23T15:47:57+08:00]  SchemaSetBuckets.go:58            原始SQL:
+[94mCREATE TABLE `store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 10 
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T15:47:58+08:00]  SchemaSetBuckets.go:193           原始BUCKETS:[ BUCKETS 10 ], length:12          
+[36mINFO   [0m[2025-12-23T15:47:58+08:00]  SchemaSetBuckets.go:200           [93mo:[ BUCKETS 10 ],n:[ BUCKETS 3][0m     
+[36mINFO   [0m[2025-12-23T15:47:58+08:00]  SchemaSetBuckets.go:214           新生SQL:
+[92muse tpcds;create table if not exists `buckets_1766476078011_store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 3
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T15:47:58+08:00]  SchemaSetBuckets.go:216           新生SQL执行中, 此过程会根据创建分区的多少, 耗费一定的时间...          
+[36mINFO   [0m[2025-12-23T15:47:58+08:00]  SchemaSetBuckets.go:233           建表完成: tpcds.buckets_1766476078011_store_sales 
+[36mINFO   [0m[2025-12-23T15:47:58+08:00]  SchemaSetBuckets.go:242           select count(*) as count from tpcds.store_sales 
+[36mINFO   [0m[2025-12-23T15:47:58+08:00]  SchemaSetBuckets.go:281           [92msubmit /*+set_var(query_timeout=14400,pipeline_dop=0,exec_mem_limit=214748364800)*/ task setbuckets_d554ibhabaol7u2bd7j0_1766476078100786 as insert into tpcds.buckets_1766476078011_store_sales select * from tpcds.store_sales[0m 
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:323           [92;92minsert into done![0;0m              
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:326           __End__Data_Finished[buckets_1766476078011_store_sales] (28800991.00/28800991.00)##################################################100% 
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:327           数据写入成功                                       
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:340           开始交换表名                                       
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:342           use tpcds;alter table store_sales rename buckets_swap_bts_1766476102 
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:349           use tpcds;alter table buckets_1766476078011_store_sales rename store_sales 
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:355           数据交互完成, 分桶修改完成!                              
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:360           删除旧表                                         
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:362           drop table tpcds.buckets_swap_bts_1766476102 
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:368           删除成功!                                        
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:369           完成整改: tpcds.store_sales                      
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  SchemaSetBuckets.go:152           [tpcds.store_sales]耗时: 24.3470831s           
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  Permit.go:33                      检索权限                                         
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  ChanTicker.go:28                  [97mMET:JOI > [0m1                         
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  Permit.go:40                      跳过权限检查: audit数据库不存在                          
+[36mINFO   [0m[2025-12-23T15:48:22+08:00]  main.go:118                       done.                                        
+[36mINFO   [0m[2025-12-23T15:59:30+08:00]  SchemaSetBuckets.go:58            原始SQL:
+[94mCREATE TABLE `store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 3 
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T15:59:30+08:00]  SchemaSetBuckets.go:193           原始BUCKETS:[ BUCKETS 3 ], length:11           
+[36mINFO   [0m[2025-12-23T15:59:30+08:00]  SchemaSetBuckets.go:200           [93mo:[ BUCKETS 3 ],n:[ BUCKETS 4][0m      
+[36mINFO   [0m[2025-12-23T15:59:30+08:00]  SchemaSetBuckets.go:214           新生SQL:
+[92muse tpcds;create table if not exists `buckets_1766476770348_store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 4
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T15:59:30+08:00]  SchemaSetBuckets.go:216           新生SQL执行中, 此过程会根据创建分区的多少, 耗费一定的时间...          
+[36mINFO   [0m[2025-12-23T15:59:30+08:00]  SchemaSetBuckets.go:233           建表完成: tpcds.buckets_1766476770348_store_sales 
+[36mINFO   [0m[2025-12-23T15:59:30+08:00]  SchemaSetBuckets.go:242           select count(*) as count from tpcds.store_sales 
+[36mINFO   [0m[2025-12-23T15:59:30+08:00]  SchemaSetBuckets.go:281           [92msubmit /*+set_var(query_timeout=14400,pipeline_dop=0,exec_mem_limit=214748364800)*/ task setbuckets_d554nohabaokd22p4tu0_1766476770417895 as insert into tpcds.buckets_1766476770348_store_sales select * from tpcds.store_sales[0m 
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:323           [92;92minsert into done![0;0m              
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:326           __End__Data_Finished[buckets_1766476770348_store_sales] (28800991.00/28800991.00)##################################################100% 
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:327           数据写入成功                                       
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:340           开始交换表名                                       
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:342           use tpcds;alter table store_sales rename buckets_swap_bts_1766476788 
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:349           use tpcds;alter table buckets_1766476770348_store_sales rename store_sales 
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:355           数据交互完成, 分桶修改完成!                              
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:360           删除旧表                                         
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:362           drop table tpcds.buckets_swap_bts_1766476788 
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:368           删除成功!                                        
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:369           完成整改: tpcds.store_sales                      
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaSetBuckets.go:152           [tpcds.store_sales]耗时: 18.2687846s           
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  Permit.go:33                      检索权限                                         
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  ChanTicker.go:28                  [97mMET:JOI > [0m1                         
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  Permit.go:40                      跳过权限检查: audit数据库不存在                          
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  main.go:130                       done.                                        
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaRefreshStats.go:51          [93m🔄 刷新表统计信息...[0m                        
+[36mINFO   [0m[2025-12-23T15:59:48+08:00]  SchemaRefreshStats.go:52          执行: ANALYZE TABLE tpcds.store_sales          
+[36mINFO   [0m[2025-12-23T16:00:08+08:00]  SchemaRefreshStats.go:65          [93;92m✅ 表统计信息已刷新[0;0m                     
+[36mINFO   [0m[2025-12-23T16:03:17+08:00]  SchemaSetBuckets.go:58            原始SQL:
+[94mCREATE TABLE `store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 4 
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T16:03:17+08:00]  SchemaSetBuckets.go:193           原始BUCKETS:[ BUCKETS 4 ], length:11           
+[36mINFO   [0m[2025-12-23T16:03:17+08:00]  SchemaSetBuckets.go:200           [93mo:[ BUCKETS 4 ],n:[ BUCKETS 1][0m      
+[36mINFO   [0m[2025-12-23T16:03:17+08:00]  SchemaSetBuckets.go:214           新生SQL:
+[92muse tpcds;create table if not exists `buckets_1766476997107_store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 1
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T16:03:17+08:00]  SchemaSetBuckets.go:216           新生SQL执行中, 此过程会根据创建分区的多少, 耗费一定的时间...          
+[36mINFO   [0m[2025-12-23T16:03:17+08:00]  SchemaSetBuckets.go:233           建表完成: tpcds.buckets_1766476997107_store_sales 
+[36mINFO   [0m[2025-12-23T16:03:17+08:00]  SchemaSetBuckets.go:242           select count(*) as count from tpcds.store_sales 
+[36mINFO   [0m[2025-12-23T16:03:17+08:00]  SchemaSetBuckets.go:281           [92msubmit /*+set_var(query_timeout=14400,pipeline_dop=0,exec_mem_limit=214748364800)*/ task setbuckets_d554ph9abaokd22p4tug_1766476997198652 as insert into tpcds.buckets_1766476997107_store_sales select * from tpcds.store_sales[0m 
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:323           [92;92minsert into done![0;0m              
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:326           __End__Data_Finished[buckets_1766476997107_store_sales] (28800991.00/28800991.00)##################################################100% 
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:327           数据写入成功                                       
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:340           开始交换表名                                       
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:342           use tpcds;alter table store_sales rename buckets_swap_bts_1766477012 
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:349           use tpcds;alter table buckets_1766476997107_store_sales rename store_sales 
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:355           数据交互完成, 分桶修改完成!                              
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:360           删除旧表                                         
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:362           drop table tpcds.buckets_swap_bts_1766477012 
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:368           删除成功!                                        
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:369           完成整改: tpcds.store_sales                      
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaSetBuckets.go:152           [tpcds.store_sales]耗时: 15.2717994s           
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  Permit.go:33                      检索权限                                         
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  ChanTicker.go:28                  [97;97mMET:JOI > [0;0m2                    
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  Permit.go:40                      跳过权限检查: audit数据库不存在                          
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  main.go:130                       done.                                        
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaRefreshStats.go:51          [93m🔄 刷新表统计信息...[0m                        
+[36mINFO   [0m[2025-12-23T16:03:32+08:00]  SchemaRefreshStats.go:52          执行: ANALYZE TABLE tpcds.store_sales          
+[36mINFO   [0m[2025-12-23T16:03:48+08:00]  SchemaRefreshStats.go:65          [93;92m✅ 表统计信息已刷新[0;0m                     
+[36mINFO   [0m[2025-12-23T16:11:02+08:00]  SchemaSetBuckets.go:58            原始SQL:
+[94mCREATE TABLE `store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 1 
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T16:11:02+08:00]  SchemaSetBuckets.go:193           原始BUCKETS:[ BUCKETS 1 ], length:11           
+[36mINFO   [0m[2025-12-23T16:11:02+08:00]  SchemaSetBuckets.go:200           [93mo:[ BUCKETS 1 ],n:[ BUCKETS 4][0m      
+[36mINFO   [0m[2025-12-23T16:11:02+08:00]  SchemaSetBuckets.go:214           新生SQL:
+[92muse tpcds;create table if not exists `buckets_1766477462342_store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 4
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T16:11:02+08:00]  SchemaSetBuckets.go:216           新生SQL执行中, 此过程会根据创建分区的多少, 耗费一定的时间...          
+[36mINFO   [0m[2025-12-23T16:11:02+08:00]  SchemaSetBuckets.go:233           建表完成: tpcds.buckets_1766477462342_store_sales 
+[36mINFO   [0m[2025-12-23T16:11:02+08:00]  SchemaSetBuckets.go:242           select count(*) as count from tpcds.store_sales 
+[36mINFO   [0m[2025-12-23T16:11:02+08:00]  SchemaSetBuckets.go:281           [92msubmit /*+set_var(query_timeout=14400,pipeline_dop=0,exec_mem_limit=214748364800)*/ task setbuckets_d554t5habaoii66k09ig_1766477462429779 as insert into tpcds.buckets_1766477462342_store_sales select * from tpcds.store_sales[0m 
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:323           [92;92minsert into done![0;0m              
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:326           __End__Data_Finished[buckets_1766477462342_store_sales] (28800991.00/28800991.00)##################################################100% 
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:327           数据写入成功                                       
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:340           开始交换表名                                       
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:342           use tpcds;alter table store_sales rename buckets_swap_bts_1766477484 
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:349           use tpcds;alter table buckets_1766477462342_store_sales rename store_sales 
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:355           数据交互完成, 分桶修改完成!                              
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:360           删除旧表                                         
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:362           drop table tpcds.buckets_swap_bts_1766477484 
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:368           删除成功!                                        
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:369           完成整改: tpcds.store_sales                      
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaSetBuckets.go:152           [tpcds.store_sales]耗时: 22.3493637s           
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  Permit.go:33                      检索权限                                         
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  ChanTicker.go:28                  [97mMET:JOI > [0m1                         
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  Permit.go:40                      跳过权限检查: audit数据库不存在                          
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  main.go:130                       done.                                        
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaRefreshStats.go:51          [93m🔄 等待tablet物理创建完成...[0m                 
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaRefreshStats.go:75          [93;92m✅ Tablet已就绪[0;0m                    
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaRefreshStats.go:93          [93;92;93m🔄 刷新表统计信息...[0;0;0m              
+[36mINFO   [0m[2025-12-23T16:11:24+08:00]  SchemaRefreshStats.go:94          执行: ANALYZE TABLE tpcds.store_sales          
+[36mINFO   [0m[2025-12-23T16:11:45+08:00]  SchemaRefreshStats.go:107         [93;92;93;92m✅ 表统计信息已刷新[0;0;0;0m           
+[36mINFO   [0m[2025-12-23T16:25:08+08:00]  SchemaSetBuckets.go:58            原始SQL:
+[94mCREATE TABLE `store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 4 
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T16:25:08+08:00]  SchemaSetBuckets.go:193           原始BUCKETS:[ BUCKETS 4 ], length:11           
+[36mINFO   [0m[2025-12-23T16:25:08+08:00]  SchemaSetBuckets.go:200           [93mo:[ BUCKETS 4 ],n:[ BUCKETS 4][0m      
+[36mINFO   [0m[2025-12-23T16:25:08+08:00]  SchemaSetBuckets.go:214           新生SQL:
+[92muse tpcds;create table if not exists `buckets_1766478308617_store_sales` (
+  `ss_item_sk` int(11) NOT NULL COMMENT "",
+  `ss_ticket_number` int(11) NOT NULL COMMENT "",
+  `ss_sold_date_sk` int(11) NULL COMMENT "",
+  `ss_sold_time_sk` int(11) NULL COMMENT "",
+  `ss_customer_sk` int(11) NULL COMMENT "",
+  `ss_cdemo_sk` int(11) NULL COMMENT "",
+  `ss_hdemo_sk` int(11) NULL COMMENT "",
+  `ss_addr_sk` int(11) NULL COMMENT "",
+  `ss_store_sk` int(11) NULL COMMENT "",
+  `ss_promo_sk` int(11) NULL COMMENT "",
+  `ss_quantity` int(11) NULL COMMENT "",
+  `ss_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_discount_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_sales_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_wholesale_cost` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_list_price` decimal(7, 2) NULL COMMENT "",
+  `ss_ext_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_coupon_amt` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid` decimal(7, 2) NULL COMMENT "",
+  `ss_net_paid_inc_tax` decimal(7, 2) NULL COMMENT "",
+  `ss_net_profit` decimal(7, 2) NULL COMMENT ""
+) ENGINE=OLAP 
+DUPLICATE KEY(`ss_item_sk`, `ss_ticket_number`)
+DISTRIBUTED BY HASH(`ss_item_sk`) BUCKETS 4
+PROPERTIES (
+"compression" = "LZ4",
+"fast_schema_evolution" = "true",
+"replicated_storage" = "true",
+"replication_num" = "1"
+);[0m 
+[36mINFO   [0m[2025-12-23T16:25:08+08:00]  SchemaSetBuckets.go:216           新生SQL执行中, 此过程会根据创建分区的多少, 耗费一定的时间...          
+[36mINFO   [0m[2025-12-23T16:25:08+08:00]  SchemaSetBuckets.go:233           建表完成: tpcds.buckets_1766478308617_store_sales 
+[36mINFO   [0m[2025-12-23T16:25:08+08:00]  SchemaSetBuckets.go:242           select count(*) as count from tpcds.store_sales 
+[36mINFO   [0m[2025-12-23T16:25:08+08:00]  SchemaSetBuckets.go:281           [92msubmit /*+set_var(query_timeout=14400,pipeline_dop=0,exec_mem_limit=214748364800)*/ task setbuckets_d5553p1abaoikm7grvs0_1766478308706910 as insert into tpcds.buckets_1766478308617_store_sales select * from tpcds.store_sales[0m 
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:323           [92;92minsert into done![0;0m              
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:326           __End__Data_Finished[buckets_1766478308617_store_sales] (28800991.00/28800991.00)##################################################100% 
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:327           数据写入成功                                       
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:340           开始交换表名                                       
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:342           use tpcds;alter table store_sales rename buckets_swap_bts_1766478322 
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:349           use tpcds;alter table buckets_1766478308617_store_sales rename store_sales 
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:355           数据交互完成, 分桶修改完成!                              
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:360           删除旧表                                         
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:362           drop table tpcds.buckets_swap_bts_1766478322 
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:368           删除成功!                                        
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:369           完成整改: tpcds.store_sales                      
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaSetBuckets.go:152           [tpcds.store_sales]耗时: 14.2998827s           
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  Permit.go:33                      检索权限                                         
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  ChanTicker.go:28                  [97mMET:JOI > [0m1                         
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  Permit.go:40                      跳过权限检查: audit数据库不存在                          
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  main.go:130                       done.                                        
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaRefreshStats.go:51          [93m🔄 等待tablet物理创建完成...[0m                 
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaRefreshStats.go:75          [93;92m✅ Tablet已就绪[0;0m                    
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaRefreshStats.go:93          [93;92;93m🔄 刷新表统计信息...[0;0;0m              
+[36mINFO   [0m[2025-12-23T16:25:22+08:00]  SchemaRefreshStats.go:94          执行: ANALYZE TABLE tpcds.store_sales          
+[36mINFO   [0m[2025-12-23T16:25:39+08:00]  SchemaRefreshStats.go:107         [93;92;93;92m✅ 表统计信息已刷新[0;0;0;0m           

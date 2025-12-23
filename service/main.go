@@ -63,24 +63,64 @@ func Run() {
 
 	if len(util.P.Table) != 0 && util.P.ClearPartition && !util.P.Auto && util.P.Buckets == 0 {
 		AutoSetPartitions()
+		
+		// 刷新表统计信息
+		RefreshMultipleTablesStats(util.P.Table)
+		
+		// 如果指定了 -id 参数，则显示tablet分布信息
+		if util.P.BackendId != "" {
+			fmt.Println()
+			Distribution(util.P.Table)
+			fmt.Println()
+		}
 		return
 	}
 
 	if len(util.P.Table) != 0 && util.P.PartitionSet && util.P.Auto {
 		SetAutoGlobal()
 		permit.Permitgrants(util.P.Table)
+		
+		// 刷新表统计信息
+		RefreshMultipleTablesStats(util.P.Table)
+		
+		// 如果指定了 -id 参数，则显示tablet分布信息
+		if util.P.BackendId != "" {
+			fmt.Println()
+			Distribution(util.P.Table)
+			fmt.Println()
+		}
 		return
 	}
 
 	if len(util.P.Table) != 0 && util.P.PartitionSet && util.P.Buckets != 0 && len(util.P.PartitionName) == 0 {
 		SetParGlobal(util.P.Table, xid.New().String(), util.P.Buckets)
 		util.Loggrs.Info("TOP:JOB > done.")
+		
+		// 刷新表统计信息
+		RefreshMultipleTablesStats(util.P.Table)
+		
+		// 如果指定了 -id 参数，则显示tablet分布信息
+		if util.P.BackendId != "" {
+			fmt.Println()
+			Distribution(util.P.Table)
+			fmt.Println()
+		}
 		return
 	}
 
 	if len(util.P.Table) != 0 && util.P.PartitionSet {
 		SetParBuckets()
 		util.Loggrs.Info("TOP:JOB > done.")
+		
+		// 刷新表统计信息
+		RefreshMultipleTablesStats(util.P.Table)
+		
+		// 如果指定了 -id 参数，则显示tablet分布信息
+		if util.P.BackendId != "" {
+			fmt.Println()
+			Distribution(util.P.Table)
+			fmt.Println()
+		}
 		return
 	}
 
@@ -88,6 +128,16 @@ func Run() {
 		if util.P.Auto || util.P.Buckets > 0 {
 			ScanSchemaAutoSetBuckets()
 			util.Loggrs.Info("done.")
+			
+			// 刷新表统计信息
+			RefreshMultipleTablesStats(util.P.Table)
+			
+			// 如果指定了 -id 参数，则在分桶修改后显示tablet分布信息
+			if util.P.BackendId != "" {
+				fmt.Println()
+				Distribution(util.P.Table)
+				fmt.Println()
+			}
 			return
 		}
 	}

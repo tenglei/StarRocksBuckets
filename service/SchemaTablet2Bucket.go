@@ -15,10 +15,14 @@ func TabletRepSize(DataSize string) {
 	datasize := size(DataSize)
 	c := color.New()
 	s := datasize / (3 * size(fmt.Sprintf("%d mb", util.P.TabletSize)))
+	
+	// 将浮点数分桶数转换为整数（向上取整，确保足够容纳数据）
+	bucketCount := int64(math.Ceil(s))
+	
 	fmt.Println(c.Add(color.FgHiYellow).Sprint("分桶数 = [分区总容量 / (3副本 * 单个tablet容量)]"))
-	fmt.Println(fmt.Sprintf("%.1f BUCKETS = [%.1f / (3 * %.1f)]", s, datasize, size(fmt.Sprintf("%d mb", util.P.TabletSize))))
-	fmt.Println(fmt.Sprintf("%.1f BUCKETS = [%s / (3 * %s)]", s, DataSize, fmt.Sprintf("%dMB", util.P.TabletSize)))
-	fmt.Println(fmt.Sprintf("%.1f BUCKETS = 综上所述，如按【TabletId/(%dMB)】", math.Round(s), util.P.TabletSize))
+	fmt.Println(fmt.Sprintf("%d BUCKETS = [%.1f / (3 * %.1f)]", bucketCount, datasize, size(fmt.Sprintf("%d mb", util.P.TabletSize))))
+	fmt.Println(fmt.Sprintf("%d BUCKETS = [%s / (3 * %s)]", bucketCount, DataSize, fmt.Sprintf("%dMB", util.P.TabletSize)))
+	fmt.Println(fmt.Sprintf("%d BUCKETS = 综上所述，如按【Tablet/(%dMB)】计算，建议分桶数为 %s", bucketCount, util.P.TabletSize, c.Add(color.FgHiGreen).Sprint(bucketCount)))
 	fmt.Println()
 }
 
